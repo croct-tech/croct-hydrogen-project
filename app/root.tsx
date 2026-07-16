@@ -1,3 +1,8 @@
+import {CroctProvider} from '@croct/plug-hydrogen';
+import {
+  createCroctMiddleware,
+  fetchContent,
+} from '@croct/plug-hydrogen/server';
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
@@ -16,6 +21,7 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
+import {AnnouncementBar} from '~/components/AnnouncementBar';
 
 export type RootLoader = typeof loader;
 
@@ -100,17 +106,26 @@ export async function loader(args: Route.LoaderArgs) {
 async function loadCriticalData({context}: Route.LoaderArgs) {
   const {storefront} = context;
 
-  const [header] = await Promise.all([
+  const [header, announcement, callout] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
       variables: {
         headerMenuHandle: 'main-menu', // Adjust to your header menu handle
       },
     }),
+    // Personalized announcement bar; Croct falls back to the slot's default
+    // content when no personalization applies
+    fetchContent('site-wide-top-bar@3', {scope: context}),
+    // Personalized nudge shown next to the cart summary
+    fetchContent('checkout-callout@2', {scope: context}),
     // Add other queries here, so that they are loaded in parallel
   ]);
 
-  return {header};
+  return {
+    header,
+    announcement: announcement.content,
+    callout: callout.content,
+  };
 }
 
 /**
@@ -176,9 +191,12 @@ export default function App() {
       shop={data.shop}
       consent={data.consent}
     >
-      <PageLayout {...data}>
-        <Outlet />
-      </PageLayout>
+      <CroctProvider>
+        <AnnouncementBar content={data.announcement} />
+        <PageLayout {...data}>
+          <Outlet />
+        </PageLayout>
+      </CroctProvider>
     </Analytics.Provider>
   );
 }
@@ -207,3 +225,5 @@ export function ErrorBoundary() {
     </div>
   );
 }
+
+export const middleware = [createCroctMiddleware()];

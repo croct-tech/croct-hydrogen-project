@@ -55,7 +55,7 @@ export function ProductForm({
                       style={{
                         border: selected
                           ? '1px solid black'
-                          : '1px solid transparent',
+                          : '1px solid #ccc',
                         opacity: available ? 1 : 0.3,
                       }}
                     >
@@ -78,7 +78,7 @@ export function ProductForm({
                       style={{
                         border: selected
                           ? '1px solid black'
-                          : '1px solid transparent',
+                          : '1px solid #ccc',
                         opacity: available ? 1 : 0.3,
                       }}
                       disabled={!exists}

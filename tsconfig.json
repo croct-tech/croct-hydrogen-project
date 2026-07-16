@@ -6,6 +6,7 @@
     "app/**/*.d.ts",
     "*.ts",
     "*.tsx",
+    "server/**/*.ts",
     "*.d.ts",
     ".graphqlrc.ts",
     ".react-router/types/**/*"
@@ -39,5 +40,6 @@
     "incremental": true,
     "composite": false,
     "verbatimModuleSyntax": true
-  }
+  },
+  "files": ["slots.d.ts"]
 }

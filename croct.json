@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.croct.com/json/v1/project.json",
+  "locales": [
+    "en-us"
+  ],
+  "defaultLocale": "en-us",
+  "slots": {
+    "coupons": "3",
+    "site-wide-top-bar": "3",
+    "checkout-callout": "2",
+    "home-hero": "2"
+  },
+  "components": {},
+  "paths": {
+    "source": "app",
+    "utilities": "app/lib",
+    "components": "app/components",
+    "examples": "app/routes",
+    "content": "."
+  }
+}

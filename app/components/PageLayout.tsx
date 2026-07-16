@@ -87,7 +87,6 @@ function SearchAside() {
                 type="search"
                 list={queriesDatalistId}
               />
-              &nbsp;
               <button onClick={goToSearch}>Search</button>
             </>
           )}

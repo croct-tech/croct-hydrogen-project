@@ -1,6 +1,8 @@
 import {useLoaderData} from 'react-router';
 import type {Route} from './+types/search';
 import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
+import {useCroct} from '@croct/plug-hydrogen';
+import {useTrackingOnce} from '~/lib/useTrackingOnce';
 import {SearchForm} from '~/components/SearchForm';
 import {SearchResults} from '~/components/SearchResults';
 import {
@@ -38,12 +40,24 @@ export async function loader({request, context}: Route.LoaderArgs) {
  */
 export default function SearchPage() {
   const {type, term, result, error} = useLoaderData<typeof loader>();
+  const croct = useCroct();
+
+  // Register the search term as an expressed interest to build a profile
+  // that personalization rules can target
+  useTrackingOnce(
+    () => {
+      void croct.track('interestShown', {interests: [term.toLowerCase()]});
+    },
+    type === 'regular' && term !== '',
+    term,
+  );
+
   if (type === 'predictive') return null;
 
   return (
     <div className="search">
       <h1>Search</h1>
-      <SearchForm>
+      <SearchForm className="search-form">
         {({inputRef}) => (
           <>
             <input
@@ -53,7 +67,6 @@ export default function SearchPage() {
               ref={inputRef}
               type="search"
             />
-            &nbsp;
             <button type="submit">Search</button>
           </>
         )}

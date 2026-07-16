@@ -5,6 +5,8 @@ import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
 import type {ProductItemFragment} from 'storefrontapi.generated';
+import {useCroct} from '@croct/plug-hydrogen';
+import {useTrackingOnce} from '~/lib/useTrackingOnce';
 
 export const meta: Route.MetaFunction = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -67,6 +69,17 @@ function loadDeferredData({context}: Route.LoaderArgs) {
 
 export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
+  const croct = useCroct();
+
+  // Register the visitor's interest in this collection to build a profile
+  // that personalization rules can target
+  useTrackingOnce(
+    () => {
+      void croct.track('interestShown', {interests: [collection.handle]});
+    },
+    true,
+    collection.handle,
+  );
 
   return (
     <div className="collection">

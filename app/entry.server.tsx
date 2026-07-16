@@ -19,6 +19,8 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    connectSrc: ['https://api.croct.io'],
+    defaultSrc: ['https://cdn.croct.io', 'https://a.storyblok.com'],
   });
 
   const body = await renderToReadableStream(

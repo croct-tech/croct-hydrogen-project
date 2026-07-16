@@ -1,0 +1,81 @@
+{
+  "coupons": [
+    {
+      "version": 3,
+      "content": {
+        "en-us": {
+          "_component": "coupon-list@3",
+          "coupons": [
+            {
+              "code": "welcome",
+              "rule": "Discount available in your first visit only.",
+              "title": "10% OFF on your first purchase.",
+              "discount": 10,
+              "maxDiscount": 100,
+              "freeShipping": false,
+              "eligible": true
+            },
+            {
+              "code": "MP10",
+              "rule": "Cupom do MP",
+              "title": "Cupom do MP",
+              "discount": 10,
+              "eligible": true,
+              "maxDiscount": 50,
+              "freeShipping": false
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "site-wide-top-bar": [
+    {
+      "version": 3,
+      "content": {
+        "en-us": {
+          "_component": "announcement-bar@3",
+          "cta": [
+            {
+              "link": "catalog/",
+              "label": "Shop now"
+            }
+          ],
+          "text": "Free shipping for your location."
+        }
+      }
+    }
+  ],
+  "checkout-callout": [
+    {
+      "version": 2,
+      "content": {
+        "en-us": {
+          "_component": "checkout-callout@1",
+          "icon": "https://a.storyblok.com/f/289964601464397/150x150/bcac64f80b/gift-icon-blue.svg",
+          "text": "Add a personal touch to your order.",
+          "title": "Free gift wrapping on orders over \u20ac100"
+        }
+      }
+    }
+  ],
+  "home-hero": [
+    {
+      "version": 2,
+      "content": {
+        "en-us": {
+          "_component": "hero-section@2",
+          "cta": [
+            {
+              "link": "catalog/",
+              "label": "Shop now"
+            }
+          ],
+          "image": "https://a.storyblok.com/f/289964601464397/4240x2827/788dbcaf4d/fallback.png",
+          "tagline": "Sporty or elegant, we got you covered.",
+          "headline": "Effortless style for everyday moments"
+        }
+      }
+    }
+  ]
+}

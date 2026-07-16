@@ -1,9 +1,11 @@
 import {useOptimisticCart} from '@shopify/hydrogen';
-import {Link} from 'react-router';
+import {Link, useRouteLoaderData} from 'react-router';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import type {RootLoader} from '~/root';
 import {useAside} from '~/components/Aside';
 import {CartLineItem, type CartLine} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import {CheckoutCallout} from '~/components/CheckoutCallout';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -40,6 +42,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
   // The useOptimisticCart hook applies pending actions to the cart
   // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
+  const rootData = useRouteLoaderData<RootLoader>('root');
 
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
@@ -56,6 +59,9 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
     >
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details">
+        {cartHasItems && rootData && (
+          <CheckoutCallout content={rootData.callout} />
+        )}
         <p id="cart-lines" className="sr-only">
           Line items
         </p>
